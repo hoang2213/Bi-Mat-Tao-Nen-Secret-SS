@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thiệp Chúc Mừng Năm Mới</title>
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #8e0e00, #1f1c18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+/* Nút mở */
+.open-btn {
+    padding: 20px 40px;
+    font-size: 24px;
+    border: none;
+    border-radius: 50px;
+    background: gold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tờ giấy */
+.paper {
+    position: relative;
+    width: 320px;
+    height: 420px;
+    background: #fffaf0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transform: scale(0) rotateX(90deg);
+    transition: 0.8s ease;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    z-index: 2;
+}
+
+.paper.show {
+    transform: scale(1) rotateX(0);
+}
+
+h1 { color: #c31432; }
+p  { font-size: 18px; margin: 8px 0; }
+
+/* Đóng */
+.close {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    background: #c31432;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Pháo hoa */
+.firework {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(6);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<button class="open-btn" onclick="openPaper()">🎇 Bấm mở thiệp 🎇</button>
+
+<div class="overlay" id="overlay">
+    <div class="paper" id="paper">
+        <h1>🎉 Chúc Mừng Năm Mới 🎉</h1>
+        <p>✨ 2026 ✨</p>
+        <p>💖 Sức khỏe dồi dào</p>
+        <p>💰 Tài lộc đầy nhà</p>
+        <p>🎆 Vạn sự như ý 🎆</p>
+        <p>🌸 Chúc mấy người đẹp ngày càng 6452</p>
+        <button class="close" onclick="closePaper()">Đóng</button>
+    </div>
+</div>
+
+<script>
+let fireworkInterval;
+
+function openPaper() {
+    document.getElementById("overlay").style.display = "flex";
+    setTimeout(() => {
+        document.getElementById("paper").classList.add("show");
+        startFireworks();
+    }, 100);
+}
+
+function closePaper() {
+    document.getElementById("paper").classList.remove("show");
+    stopFireworks();
+    setTimeout(() => {
+        document.getElementById("overlay").style.display = "none";
+    }, 500);
+}
+
+function startFireworks() {
+    fireworkInterval = setInterval(createFirework, 300);
+}
+
+function stopFireworks() {
+    clearInterval(fireworkInterval);
+}
+
+function createFirework() {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+
+    const paper = document.getElementById("paper");
+    const rect = paper.getBoundingClientRect();
+
+    fw.style.left = rect.left + Math.random() * rect.width + "px";
+    fw.style.top  = rect.top  + Math.random() * rect.height + "px";
+    fw.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+    document.body.appendChild(fw);
+
+    setTimeout(() => fw.remove(), 1500);
+
+    .arrow {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    animation: bounce 1s infinite;
+    color: white;
+}
+
+@keyframes bounce {
+    0%   { transform: translateX(-50%) translateY(0); }
+    50%  { transform: translateX(-50%) translateY(-15px); }
+    100% { transform: translateX(-50%) translateY(0); }
+}
+
+}
+</script>
+
+</body>
+</html>
+
